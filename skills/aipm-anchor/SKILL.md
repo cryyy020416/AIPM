@@ -79,20 +79,28 @@ Use these rating labels:
 - `待提升`: weak; must repair before moving on.
 - `不成立`: cannot support an AI product project in the current form.
 
-Score these dimensions:
+Score these dimensions. Keep the scorecard compact: merged dimensions should still inspect their sub-questions, but output one row instead of splitting them into many rows.
 
-| Dimension | Judge | Common Weakness |
-|---|---|---|
-| 业务场景 | Is there a real user task, not just a tool category? | "AI 助手", "知识库", "写作工具" |
-| 触发时刻 | When exactly does the user need it? | "学习时", "工作中", "需要帮助时" |
-| 失败成本 | What goes wrong if the task is done poorly? | only "效率低", "更方便" |
-| 输入材料 | What real material can be processed or sampled? | invented users or no sample source |
-| 高摩擦节点 | Which task node is hard, repeated, and judgment-heavy? | every feature is equally vague |
-| AI 必要性 | Why are rules, templates, search, or forms insufficient? | AI is cosmetic |
-| 自进化接口 | What feedback, memory, corrections, or badcases can accumulate? | only stores chat history |
-| 主动服务接口 | What signal should trigger a useful proactive action? | only generic reminders |
-| MVP 可行性 | Can a 3-7 day version prove a minimum evidence loop? | only a page/demo, no trace |
-| 边界约束 | Are privacy, hallucination, manual confirmation, and overclaiming handled? | claims launch or metrics without evidence |
+| Dimension | Judge                                                                                                           | Common Weakness                                             |
+| --------- | --------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| 场景有效性     | Is there a concrete user task, trigger moment, and meaningful failure cost?                                      | only a tool category, vague timing, or just "效率低"/"更方便"       |
+| AI 节点适配度 | Does the task node have real input material, high friction, and AI necessity beyond rules/templates/search/forms? | invented inputs, vague friction, or AI as decoration        |
+| 自进化接口     | What feedback, memory, corrections, or badcases can accumulate?                                                 | only stores chat history                                    |
+| 主动服务接口    | What signal should trigger a useful proactive action?                                                           | only generic reminders                                      |
+| MVP 可行性   | Can a 3-7 day version prove a minimum evidence loop?                                                            | only a page/demo, no trace                                  |
+| 边界约束      | Are privacy, hallucination, manual confirmation, and overclaiming handled?                                      | claims launch or metrics without evidence                   |
+
+For `场景有效性`, explicitly cover:
+
+- business scenario: whether there is a real user task, not just a tool category;
+- trigger moment: when exactly the user needs it;
+- failure cost: what goes wrong if the task is done poorly.
+
+For `AI 节点适配度`, explicitly cover:
+
+- input material: what real material can be processed or sampled;
+- high-friction node: which task node is hard, repeated, and judgment-heavy;
+- AI necessity: why rules, templates, search, or forms are insufficient.
 
 Output format:
 
