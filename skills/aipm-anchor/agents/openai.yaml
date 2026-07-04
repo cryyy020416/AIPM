@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIPM-Anchor"
+  short_description: "诊断现有 AI 项目功能，锚定业务场景、AI 节点与 MVP"
+  default_prompt: "Use $aipm-anchor to diagnose whether my AI project function is business-grounded and define a minimum MVP."
