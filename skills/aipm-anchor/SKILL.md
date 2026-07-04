@@ -211,6 +211,8 @@ The MVP should include:
 
 Treat self-evolution and proactive service as two required hooks, not two optional directions.
 
+This skill stops at function anchoring and MVP boundary definition. Do not output a 3-7 day action checklist, implementation task list, or build plan here. Those belong to later project-planning skills after the function, evaluation standard, and implementation path are clearer.
+
 ### Self-Evolution Hook
 
 Define:
@@ -285,9 +287,6 @@ Output format:
 
 ### 长期终局
 用 3-5 句话描述它如果持续迭代，最终会变成什么动态服务系统。
-
-### 3-7 天行动清单
-列 3-5 个最小 artifact，例如样本表、prompt chain、评分表、badcase 表、低保真 demo。
 ```
 
 ## Quality Bar
