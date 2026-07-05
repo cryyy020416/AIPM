@@ -179,21 +179,44 @@ If the user declines further detail, stop. Provide only a concise summary of the
 
 After the user agrees to drill down, expand the same chain with the same IDs.
 
-Do not create disconnected tables. Every table must start with:
+Do not create disconnected tables. Step 3 should read like a traceable implementation explanation mounted to the same `L1-L8` chain. Use the `环节 ID` and `环节名称` from Step 2 as the spine, then drill down with short headings and numbered lists.
 
 ```text
 环节 ID
 环节名称
 ```
 
-### 3.1 Step-Level Input Processing Output
+### 3.1 Per-Step Narrative Drilldown
 
-First expand each `L` step:
+For every `L` step, use this structure:
 
 ```markdown
-### 环节输入-处理-输出下钻
-| 环节 ID | 环节名称 | 本环节输入 | 本环节处理 | 本环节输出 | 输出给谁/给下一步什么 |
-|---|---|---|---|---|---|
+### L1 触发
+
+先用 1-2 句话说明这个环节在主链路里负责什么，以及为什么它存在。
+
+**输入可能来自几类情况：**
+
+1. ...
+2. ...
+3. ...
+
+**处理动作：**
+
+1. ...
+2. ...
+3. ...
+
+**实现方式取舍：**
+
+1. 第一版可以用 ...，因为 ...
+2. 后续只有在 ... 条件出现时，才升级到 ...
+
+**输出、状态和边界：**
+
+这个环节输出 ...，交给 L2 ...。需要保存 ...。
+
+失败边界是 ...。第一版用 ... 兜底。MVP 证据是 ...。
 ```
 
 This answers:
@@ -203,19 +226,46 @@ This step eats what?
 This step does what?
 This step produces what?
 Who uses the result?
+What state or evidence should be saved?
+Where can it fail?
+What is enough for the first version?
 ```
 
-### 3.2 Node-Level Implementation
+### 3.2 Input Cases
 
-Then split only the steps that need more detail. Usually expand `预处理`, `核心处理`, `反馈`, `状态沉淀`, and `主动触发`; keep simple steps concise.
+For each step, make input cases visible. Do not bury them in one long paragraph.
+
+Use wording such as:
+
+```text
+输入可能来自三类情况：
+输入通常包括五类：
+输入可能有四种状态：
+```
+
+Then enumerate the cases:
 
 ```markdown
-### 处理节点与技术实现下钻
-| 环节 ID | 环节名称 | 节点 ID | 处理节点 | 节点输入 | 节点输出 | 第一版实现方式 | 是否 AI | 为什么这样够用 |
-|---|---|---|---|---|---|---|---|---|
+1. 用户手动提交的材料。
+2. 系统从历史状态里带出的材料。
+3. 咨询师为了 MVP 演示人工整理出的材料。
 ```
 
-Technology choices must be plain and minimal:
+### 3.3 Processing Actions And Implementation Choices
+
+Split processing into concrete actions before discussing tools.
+
+Good:
+
+```markdown
+**处理动作：**
+
+1. 校验必填字段。
+2. 提取平台约束。
+3. 判断哪些素材要补充。
+```
+
+Then explain implementation choices in plain and minimal terms:
 
 - manual / semi-manual review;
 - table, CSV, Notion, Airtable, JSON;
@@ -234,19 +284,20 @@ Use this wording:
 后续只有在 A 条件出现时，才升级到 B。
 ```
 
-### 3.3 Boundary And Persistence
+### 3.4 Output, Persistence, Boundary, And MVP Evidence
 
-Attach boundary and persistence to the same step IDs.
+End every step with one compact paragraph titled:
 
 ```markdown
-### 数据状态挂载表
-| 环节 ID | 环节名称 | 本环节产生/使用的数据 | 是否保存 | 保存方式 | 下一次怎么用 | 不保存/需脱敏内容 |
-|---|---|---|---|---|---|---|
-
-### 失败边界挂载表
-| 环节 ID | 环节名称 | 最容易失败的地方 | 失败后会怎样 | 第一版兜底方式 | 必须人工确认吗 |
-|---|---|---|---|---|---|
+**输出、状态和边界：**
 ```
+
+This paragraph must include:
+
+- output: what this step produces and who receives it;
+- persistence: what should be saved, versioned, reviewed, or desensitized;
+- boundary: what can fail and how the first version catches or reduces the damage;
+- MVP evidence: what proves this step is working enough for the first version.
 
 Boundary categories to consider:
 
@@ -261,16 +312,6 @@ Boundary categories to consider:
 - privacy or sensitive data;
 - cost and over-complexity.
 
-### 3.4 MVP Implementation Mounting
-
-End with what to do in the first version, still mounted to the same step IDs:
-
-```markdown
-### MVP 实现挂载表
-| 环节 ID | 环节名称 | 第一版必须做 | 第一版可以手动/半自动 | 第一版暂时不做 | 做完后的证据 |
-|---|---|---|---|---|---|
-```
-
 The MVP is not a full build plan. It is the smallest evidence loop:
 
 ```text
@@ -283,6 +324,23 @@ one lightweight proactive trigger;
 one clear explanation of how the chain works.
 ```
 
+### 3.5 Default Step Labels
+
+Unless the user's project clearly needs different labels, drill down these eight steps:
+
+```text
+L1 触发
+L2 输入
+L3 预处理
+L4 核心处理
+L5 输出
+L6 反馈
+L7 状态沉淀
+L8 下一次/主动触发
+```
+
+Keep simple steps short. Expand `预处理`, `核心处理`, `反馈`, `状态沉淀`, and `主动触发` more deeply when they contain the main implementation uncertainty.
+
 ## Final Output Format
 
 When completing Step 3, output:
@@ -290,22 +348,52 @@ When completing Step 3, output:
 ```markdown
 ## Step 3 / 3：主链路实现下钻
 
-### 1. 环节输入-处理-输出下钻
+### L1 触发
+
 ...
 
-### 2. 处理节点与技术实现下钻
+**输入可能来自三类情况：**
+
+1. ...
+2. ...
+3. ...
+
+**处理动作：**
+
+1. ...
+2. ...
+
+**实现方式取舍：**
+
+1. ...
+2. ...
+
+**输出、状态和边界：**
+
 ...
 
-### 3. 数据状态挂载
+### L2 输入
 ...
 
-### 4. 失败边界挂载
+### L3 预处理
 ...
 
-### 5. MVP 实现挂载
+### L4 核心处理
 ...
 
-### 6. 3-7 天最小证据闭环
+### L5 输出
+...
+
+### L6 反馈
+...
+
+### L7 状态沉淀
+...
+
+### L8 下一次/主动触发
+...
+
+### 3-7 天最小证据闭环
 - 第 1 个证据：
 - 第 2 个证据：
 - 第 3 个证据：
@@ -340,4 +428,3 @@ Do not say:
 ```
 
 unless the user provides evidence and the implementation chain actually supports it.
-

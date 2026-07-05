@@ -1,4 +1,4 @@
 interface:
   display_name: "AIPM-Chain"
   short_description: "把 AI 功能锚点拆成可实现、可解释、可迭代的主链路"
-  default_prompt: "Use $aipm-chain to turn my anchored AI project function into one main implementation chain, then drill into each step's input, processing, output, boundary, persisted state, and MVP implementation."
+  default_prompt: "Use $aipm-chain to turn my anchored AI project function into one main implementation chain, then drill into L1-L8 with formatted input cases, processing actions, implementation choices, output/state/boundary, and MVP evidence."
