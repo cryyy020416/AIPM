@@ -1,0 +1,4 @@
+interface:
+  display_name: "AIPM-Eval"
+  short_description: "为 AI 项目主链路构建离线评测、rubric、bad case 归因与复测口径"
+  default_prompt: "Use $aipm-eval to build an evaluation system for my AI product chain, including eval objects, cases, rubric, bad-case diagnosis examples, and retest criteria."
