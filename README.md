@@ -14,15 +14,16 @@ AIPM Skills 是一套面向 AI 产品项目设计的 Codex Skill 工作流。
 
 ## 整体闭环
 
-这套 Skill 目前包含三个阶段：
+这套 Skill 目前包含四个阶段：
 
 ```text
 aipm-anchor
 -> aipm-chain
 -> aipm-eval
+-> AIPM-Resume
 ```
 
-三步合起来回答一个完整 AI 项目的核心问题：
+四步合起来回答一个完整 AI 项目的核心问题：
 
 ```text
 1. 这个项目到底锚定哪个真实业务场景？
@@ -30,6 +31,7 @@ aipm-anchor
 3. 这条链路每一步怎么实现、怎么沉淀状态、怎么形成闭环？
 4. 怎么评测它是否有效？
 5. 出现 bad case 后，怎么归因、修改、复测？
+6. 最后怎么写进简历，并且经得起面试追问？
 ```
 
 换句话说，这不是一组孤立 prompt，而是一条 AI 产品项目的完整证据链：
@@ -44,6 +46,8 @@ aipm-anchor
 -> 离线评测体系
 -> bad case 归因
 -> 同口径复测
+-> 简历项目表达
+-> 面试防守解释
 ```
 
 ## 01. AIPM-Anchor
@@ -198,6 +202,50 @@ skills/aipm-eval
 - 需要把低分结果归因到 prompt、检索、schema、规则、反馈或状态沉淀
 - 需要避免把离线评测夸成线上效果
 
+## 04. AIPM-Resume
+
+路径：
+
+```text
+skills/AIPM-Resume
+```
+
+`AIPM-Resume` 用来完成 AI 项目的最后一步：把已经梳理清楚的项目内容，一步到位写成可放进简历的项目经历。
+
+它不再拆成多轮阶段诊断，而是根据用户上传或描述的项目材料，直接输出：
+
+- 项目标题
+- 1 句项目背景
+- 3-5 条简历 bullet
+- 每条写法背后的解释维度
+- 必要时给保守版、原型版或结果版改法
+
+它特别强调：简历里的 `Agent Workflow` 不能只写成场景流程，例如“记录 -> 分析 -> 建议 -> 反馈”，而要写出更落地的实现链路：
+
+- 意图识别节点
+- orchestrator / 调度节点
+- 知识库、规则库或轻量知识表
+- Tool Calling / 计算器 / 表格查询
+- 状态管理
+- 记忆更新
+- guardrail
+- trace
+- bad case 归因
+
+核心产出：
+
+- 完整简历项目写法
+- 场景明确、技术落地、AI 必要性、动态闭环、评估意识、边界可信这 6 个维度的解释
+- 简历表达边界提示
+- 可选版本：保守版 / 原型版 / 结果版
+
+适合在这些情况下使用：
+
+- 用户已经完成 Anchor、Chain、Eval，希望把项目写进简历
+- 用户有 AI 项目 PRD，但不知道怎么压缩成简历 bullet
+- 项目经历看起来像“只写了 prompt”，需要补出 Agent Workflow、规则库、工具调用、状态和 trace 等实现感
+- 简历项目容易夸大，需要改成更可信、更能面试防守的表达
+
 ## 推荐使用顺序
 
 ### 从零开始做 AI 项目
@@ -206,6 +254,7 @@ skills/aipm-eval
 1. 用 aipm-anchor 找到真实业务场景和 AI 介入节点
 2. 用 aipm-chain 拆出主链路和实现方案
 3. 用 aipm-eval 搭建评测体系和 bad case 迭代方式
+4. 用 AIPM-Resume 输出完整简历项目写法和解释维度
 ```
 
 ### 已经有项目 demo
@@ -214,6 +263,7 @@ skills/aipm-eval
 1. 先用 aipm-anchor 诊断这个 demo 是否只是功能堆叠
 2. 如果场景成立，再用 aipm-chain 梳理主链路
 3. 最后用 aipm-eval 生成评测体系，补上项目可信度
+4. 用 AIPM-Resume 把项目翻译成可投递简历表达
 ```
 
 ### 已经有功能链路
@@ -222,6 +272,7 @@ skills/aipm-eval
 1. 可以跳过 aipm-anchor
 2. 直接用 aipm-chain 细化 L1-L8
 3. 再用 aipm-eval 做离线评测、rubric 和复测方案
+4. 最后用 AIPM-Resume 输出简历 bullet
 ```
 
 ### 已经有实现，但没有评测
@@ -230,6 +281,7 @@ skills/aipm-eval
 1. 用 aipm-chain 反向梳理当前系统链路
 2. 用 aipm-eval 选择关键节点和端到端结果
 3. 构建 20-50 条 eval case，跑第一版 bad case 归因
+4. 用 AIPM-Resume 收敛成可信简历项目表达
 ```
 
 ## 最终项目材料应该能回答的问题
@@ -248,6 +300,7 @@ skills/aipm-eval
 - 低分样本怎么归因到链路节点
 - 修改后怎么复测
 - 哪些指标可以写，哪些暂时不能写
+- 简历里每条 bullet 分别证明什么能力
 
 ## 项目表达边界
 
@@ -286,18 +339,20 @@ skills/aipm-eval
 skills/
   aipm-anchor/
     SKILL.md
-    agents/openai.yaml
   aipm-chain/
     SKILL.md
-    agents/openai.yaml
   aipm-eval/
     SKILL.md
-    agents/openai.yaml
+  AIPM-Resume/
+    SKILL.md
 ```
 
-每个 Skill 目录包含：
+每个 Skill 目录至少包含：
 
 - `SKILL.md`：Codex 实际读取的技能说明和工作流
+
+部分目录也可以包含：
+
 - `agents/openai.yaml`：Codex UI 中展示的名称、简介和默认 prompt
 
 ## Design Principle
@@ -313,6 +368,7 @@ AIPM Skills 的核心不是让 Agent 输出更多内容，而是让 Agent 按正
 - 评测标准可复用
 - bad case 可归因
 - 项目表达不夸大
+- 简历 bullet 可面试防守
 
 最终目标是让一个 AI 项目不仅“看起来用了 AI”，而是能被清楚地解释：
 
@@ -323,4 +379,5 @@ AIPM Skills 的核心不是让 Agent 输出更多内容，而是让 Agent 按正
 怎么评
 坏了怎么改
 改完怎么证明变好
+最后怎么可信地写进简历
 ```
